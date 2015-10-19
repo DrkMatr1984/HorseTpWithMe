@@ -1,0 +1,160 @@
+package me.TheMrJezza;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Horse;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Vehicle;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.server.ServerCommandEvent;
+import org.bukkit.event.vehicle.VehicleExitEvent;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
+
+public class HorseTpWithMe extends JavaPlugin implements Listener {
+
+	private Map<Vehicle, Player> map = new HashMap<Vehicle, Player>();
+	private Set<Player> set = new HashSet<Player>();
+
+	@Override
+	public void onEnable() {
+		Bukkit.getServer().getPluginManager().registerEvents(this, this);
+		loadConfig();
+		getLogger().info("HorseTpWithMe is Enabled");
+		System.out.println((char) 27
+				+ "[32;1mCongrats, HorseTpWithMe is on and working."
+				+ (char) 27 + "[0;m");
+		saveDefaultConfig();
+	}
+
+	public void loadConfig() {
+		String path = "Use-A-Permissioin";
+		getConfig().addDefault(path, false);
+		getConfig().options().copyDefaults(true);
+		saveDefaultConfig();
+	}
+
+	@EventHandler
+	public void PlayerCommand(PlayerCommandPreprocessEvent event) {
+		for (final Player all : Bukkit.getServer().getOnlinePlayers()) {
+			if (getConfig().getBoolean("Use-A-Permissioin") == true) {
+				if (all.hasPermission("horsey.teleport") || (all.isOp())) {
+					set.add(all);
+					new BukkitRunnable() {
+						public void run() {
+							set.remove(all);
+						}
+					}.runTaskLater(this, 2L);
+					return;
+
+				}
+			} else if (getConfig().getBoolean("Use-A-Permissioin") == false) {
+				set.add(all);
+				new BukkitRunnable() {
+					public void run() {
+						set.remove(all);
+					}
+				}.runTaskLater(this, 2L);
+				return;
+			}
+		}
+	}
+
+	@EventHandler
+	public void ServerCommand(ServerCommandEvent event) {
+		for (final Player all : Bukkit.getServer().getOnlinePlayers()) {
+			if (getConfig().getBoolean("Use-A-Permissioin") == true) {
+				if (all.hasPermission("horsey.teleport") || (all.isOp())) {
+					set.add(all);
+					new BukkitRunnable() {
+						public void run() {
+							set.remove(all);
+						}
+					}.runTaskLater(this, 2L);
+					return;
+
+				}
+			} else if (getConfig().getBoolean("Use-A-Permissioin") == false) {
+				set.add(all);
+				new BukkitRunnable() {
+					public void run() {
+						set.remove(all);
+					}
+				}.runTaskLater(this, 2L);
+				return;
+			}
+		}
+	}
+
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+	public void playerTeleport(PlayerTeleportEvent event) {
+		if (event.getCause() != null) {
+			final Player player = event.getPlayer();
+			if (player.getLocation().getChunk().isLoaded()) {
+				player.getLocation().getChunk().load();
+			}
+			if (player.isInsideVehicle()) {
+				final Entity vehicle = player.getVehicle();
+				if (vehicle instanceof Horse) {
+					if (map.containsKey(vehicle)) {
+						if (set.contains(player)) {
+							new BukkitRunnable() {
+								public void run() {
+									if (!player.getLocation().getChunk()
+											.isLoaded()) {
+										player.getLocation().getChunk().load();
+									}
+									vehicle.teleport(player.getLocation());
+									return;
+								}
+							}.runTaskLater(this, 2L);
+							new BukkitRunnable() {
+								public void run() {
+									vehicle.setPassenger(player);
+								}
+							}.runTaskLater(this, 10L);
+							map.remove(vehicle);
+							return;
+						}
+					}
+				}
+				return;
+			}
+		}
+	}
+
+	@EventHandler
+	public void HorseProtect(EntityDamageEvent evt) {
+		if (evt.getEntity() instanceof Horse) {
+			if (evt.getCause().equals(DamageCause.SUFFOCATION)) {
+				evt.setCancelled(true);
+			}
+		}
+	}
+
+	@EventHandler
+	public void playerExit(VehicleExitEvent event) {
+		Vehicle vehicle = event.getVehicle();
+		if (vehicle instanceof Horse) {
+			if (event.getExited() instanceof Player) {
+				Player player = (Player) event.getExited();
+				map.put(vehicle, player);
+				if (map.containsKey(event.getVehicle())) {
+					return;
+				}
+				return;
+			}
+		}
+	}
+}
