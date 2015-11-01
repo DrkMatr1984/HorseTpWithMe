@@ -5,11 +5,12 @@
 	files (the "Software"). You do not have permission to use, copy, modify, merge, 
 	publish, distribute, sublicense, and/or sell copies of the Software. The 
 	Software is subject to the following conditions:
-	
-	If you have obtained permission to use, copy, modify, merge, publish, distribute, 
-	sublicense, and/or sell copies of the Software please note the following and the
-	above copyright notice shall be included in all copies or substantial portions
+
+	The above copyright notice shall be included in all copies or substantial portions
 	of the Software.
+	
+	If you have obtained permission to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	copies of the Software please note the following:
 
 	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -60,8 +61,13 @@ public class HorseTpWithMe extends JavaPlugin implements Listener {
 		saveDefaultConfig();
 	}
 
+	@Override
+	public void onDisable() {
+		getLogger().info("HorseTpWithMe is Disabled");
+	}
+
 	public void loadConfig() {
-		String path = "Use-A-Permissioin";
+		String path = "Use-A-Permission";
 		getConfig().addDefault(path, false);
 		getConfig().options().copyDefaults(true);
 		saveDefaultConfig();
@@ -70,7 +76,7 @@ public class HorseTpWithMe extends JavaPlugin implements Listener {
 	@EventHandler
 	public void PlayerCommand(PlayerCommandPreprocessEvent event) {
 		for (final Player all : Bukkit.getServer().getOnlinePlayers()) {
-			if (getConfig().getBoolean("Use-A-Permissioin") == true) {
+			if (getConfig().getBoolean("Use-A-Permission") == true) {
 				if (all.hasPermission("horsey.teleport") || (all.isOp())) {
 					set.add(all);
 					new BukkitRunnable() {
@@ -81,7 +87,7 @@ public class HorseTpWithMe extends JavaPlugin implements Listener {
 					return;
 
 				}
-			} else if (getConfig().getBoolean("Use-A-Permissioin") == false) {
+			} else if (getConfig().getBoolean("Use-A-Permission") == false) {
 				set.add(all);
 				new BukkitRunnable() {
 					public void run() {
@@ -96,7 +102,7 @@ public class HorseTpWithMe extends JavaPlugin implements Listener {
 	@EventHandler
 	public void ServerCommand(ServerCommandEvent event) {
 		for (final Player all : Bukkit.getServer().getOnlinePlayers()) {
-			if (getConfig().getBoolean("Use-A-Permissioin") == true) {
+			if (getConfig().getBoolean("Use-A-Permission") == true) {
 				if (all.hasPermission("horsey.teleport") || (all.isOp())) {
 					set.add(all);
 					new BukkitRunnable() {
@@ -107,7 +113,7 @@ public class HorseTpWithMe extends JavaPlugin implements Listener {
 					return;
 
 				}
-			} else if (getConfig().getBoolean("Use-A-Permissioin") == false) {
+			} else if (getConfig().getBoolean("Use-A-Permission") == false) {
 				set.add(all);
 				new BukkitRunnable() {
 					public void run() {
