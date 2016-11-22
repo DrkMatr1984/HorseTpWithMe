@@ -1,6 +1,11 @@
-# HorseTpWithMe
-This is extreamly outdated, I haven't updated this repo in a very long time.
+# HorseTpWithMe v1.4.12
+This is the Source for HorseTpWithMe.
 
-Maybe I'll update the repo soon with the current HorseTpWithMe Source, or maybe I won't. I haven't decided.
+You can download the current compiled Plugin from Spigot or Bukkit.
+Bukkit:
+https://dev.bukkit.org/bukkit-plugins/horsetpwithme/
 
-Either way, you can still get the current version of the (compliled) plugin from Spigot (https://www.spigotmc.org/resources/horsetpwithme.8186/) or Bukkit (https://dev.bukkit.org/bukkit-plugins/horsetpwithme/)
+Spigot:
+https://www.spigotmc.org/resources/horsetpwithme.8186/
+
+Have a nice day!
