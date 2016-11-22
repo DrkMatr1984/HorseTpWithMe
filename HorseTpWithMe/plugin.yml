@@ -1,0 +1,16 @@
+name: HorseTpWithMe
+main: au.TheMrJezza.HorseTpWithMe.HorseTpWithMeMain
+version: 1.4.12
+author: TheMrJezza
+description: Teleports horses with you if you are sitting on them.
+SoftDepend: [CreativeGates, MassiveCore]
+permissions: 
+    horsey.teleport:
+        default: op
+    horsey.ignoreblacklist:
+        default: op
+    horsey.reload:
+        default: op
+commands:
+    htpreload:
+        description: Reloads the HorseTpWithMe Config file.

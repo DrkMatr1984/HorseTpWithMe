@@ -1,0 +1,43 @@
+#########################################################################
+#                                                                       #
+# -------------------  HorseTpWithMe Configuration  ------------------- #
+#                                                                       #
+#########################################################################
+
+# When Use-A-Permission is set to true, horses will only teleport for
+# players who have the permission 'horsey.teleport', or if the player
+# is OP.
+
+# When Use-A-Permission is set to false, the plugin will ignore the
+# permission and horses will teleport for everyone.
+
+# This also applies to Pigs if you have 'TeleportPigs' set to true.
+
+# Change this to true if you want to use the permission 'horsey.teleport'
+Use-A-Permission: false
+
+# Should the plugin teleport Pigs?
+TeleportPigs: false
+# !!!WARNING!!! PIG TELEPORTATION IS BUGGY.
+
+# Should Horses need a saddle to teleport? (This does not affect Pigs)
+RequireSaddle: false
+
+# Horses/Pigs will not teleport into or out of the worlds on this list. 
+# Remember the names in this list are cASe SeNSitiVe.
+Blacklisted-Worlds:
+- ExAMplE_woRlD
+
+# {ANIMAL} Will either be changed to "Horse" or "Pig" depending on what
+# type of animal is getting teleported.
+
+# If a player tries to teleport a horse INTO a Blacklisted World, they
+# will recieve this message.
+Blacklisted-World-Message: '&4&lWARNING: &r&c{ANIMAL} teleportation is disabled for this world.'
+
+# If a player tries to teleport a horse OUT OF a Blacklisted World, they
+# will recieve this message.
+Blacklisted-World-Exit-Message: '&4&lWARNING: &r&c{ANIMAL} teleportation is disabled for the world you teleported from.'
+
+# This is the message players will get when they try to use /htpreload without permission.
+NoPermMessage: '&4You do not have permission for that!'
